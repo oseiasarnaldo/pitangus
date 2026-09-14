@@ -22,20 +22,56 @@ Ela mora num cofre, fora da árvore do projeto:
 ~/.config/segredos/
 ```
 
-Um arquivo por serviço, com permissão fechada (só você lê):
-
 No Windows o caminho é o mesmo e o jeito de criar muda: veja `windows.md`.
 
 ```bash
-mkdir -p ~/.config/segredos
-chmod 700 ~/.config/segredos
+mkdir -p ~/.config/segredos/projetos
+chmod 700 ~/.config/segredos ~/.config/segredos/projetos
+```
 
-# cria o arquivo do servico
+### Duas gavetas, e confundir as duas dá trabalho
+
+Nem toda credencial tem a mesma vida. Uma é **sua**, outra é **daquele
+cliente**, e elas mudam em ritmos diferentes.
+
+| Gaveta | O que guarda | Exemplo |
+|---|---|---|
+| `segredos/` | o que é seu e serve pra todo projeto | chave da API de imagem |
+| `segredos/projetos/` | o que é de **um** projeto só | acesso de FTP do servidor daquele cliente, token de pixel |
+
+**Na gaveta de cima**, um arquivo por serviço:
+
+```bash
 printf 'GEMINI_API_KEY=coloque_a_chave_aqui\n' > ~/.config/segredos/gemini.env
 chmod 600 ~/.config/segredos/gemini.env
 ```
 
-E no projeto, um `.gitignore` com `.env` e `.env.*` **antes do primeiro commit**.
+**Na de baixo**, um arquivo por projeto, com o mesmo nome da pasta do projeto:
+
+```bash
+printf 'FTP_HOST=\nFTP_USER=\nFTP_PASS=\nFTP_PASTA=\n' > ~/.config/segredos/projetos/ingles-para-ti.env
+chmod 600 ~/.config/segredos/projetos/ingles-para-ti.env
+```
+
+E o `PROJETO.md` **aponta** pro arquivo, sem nunca conter o conteúdo dele:
+
+```markdown
+Credenciais: ~/.config/segredos/projetos/ingles-para-ti.env
+```
+
+### Por que não guardar dentro da pasta do projeto
+
+Parece mais natural: o acesso é daquele site, por que não fica junto?
+
+**Porque a pasta do projeto vai pro ar.** Se o arquivo estiver lá e a lista de
+exclusão falhar, você publica a senha do seu servidor na internet, num endereço
+que qualquer um acessa. É o tipo de erro que só se descobre depois.
+
+A associação entre projeto e credencial é resolvida pelo nome do arquivo e pela
+linha no `PROJETO.md`. O segredo em si nunca entra na pasta que é publicada.
+
+E no projeto, um `.gitignore` com `.env` e `.env.*` **antes do primeiro
+commit**, como rede de segurança pro caso de algo escapar.
 
 ### Se a chave vazou
 

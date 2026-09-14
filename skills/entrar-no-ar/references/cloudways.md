@@ -168,7 +168,8 @@ Um script de envio não faz parte desta skill, de propósito: cada projeto tem s
 pasta e seu destino, e script genérico vira configuração disfarçada. Mas o
 roteiro é sempre o mesmo, e é isso que importa guardar:
 
-1. Conectar por SFTP lendo credencial do cofre, nunca do código.
+1. Conectar por SFTP lendo credencial do **arquivo daquele projeto**
+   (`~/.config/segredos/projetos/<nome>.env`), nunca do código.
 2. Percorrer a pasta local pulando o que não vai pro ar (fonte, ferramenta,
    material bruto, arquivo de configuração local).
 3. Carimbar `?v=<timestamp>` nos links de css e js **do próprio projeto**.
@@ -189,4 +190,4 @@ tira o esquecimento da equação, e o passo 5 é o que todo mundo esquece.
 - [ ] HTML com `no-cache, must-revalidate`
 - [ ] Cache purgado nos dois hosts depois do envio
 - [ ] Versão no ar confirmada por `curl`, não por suposição
-- [ ] Credencial lida do cofre, fora da árvore do projeto
+- [ ] Credencial lida de `segredos/projetos/<nome>.env`, fora da pasta publicada

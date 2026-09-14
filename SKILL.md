@@ -371,6 +371,7 @@ Tipo: do zero | uplift (mantém: copy? imagens?)
 Modo: passo a passo | automático
 Etapa atual: setup | P | O | D | E | no ar
 Olhos: sim | dispensou | pendente de reiniciar
+Credenciais: ~/.config/segredos/projetos/<nome>.env | ainda não criado
 Atualizado: <data>
 
 ## Briefing

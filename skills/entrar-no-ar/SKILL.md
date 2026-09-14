@@ -94,21 +94,37 @@ existe de verdade.
 
 ---
 
-## Segredos ficam num lugar só
+## O acesso da hospedagem é do projeto, não do ambiente
 
-Credencial não mora no projeto, não mora no HTML e não entra no histórico do
-Git. Mora num cofre fora da árvore do projeto, com permissão fechada:
+Credencial não mora na pasta do projeto, não mora no HTML e não entra no
+histórico do Git. Mas **acesso de hospedagem também não é igual pra todo
+projeto**: cada cliente tem servidor, usuário e pasta diferentes.
+
+Por isso o cofre tem duas gavetas:
 
 ```
-${XDG_CONFIG_HOME:-$HOME/.config}/segredos/
+~/.config/segredos/               o que é seu e vale pra tudo (chave de API)
+~/.config/segredos/projetos/      um arquivo por projeto (o acesso daquele servidor)
 ```
 
-Um arquivo `.env` por serviço, modo 600, e o projeto lê de lá. As variáveis de
-hospedagem que costumam ser necessárias: host, porta, usuário, senha e o
-diretório remoto. Os **nomes** ficam documentados, os **valores** nunca.
+O arquivo do projeto leva **o mesmo nome da pasta do projeto**, e o
+`PROJETO.md` aponta pra ele:
 
-No projeto, `.gitignore` com `.env` e `.env.*` antes do primeiro commit. Uma
-credencial que entra no histórico continua lá depois de você apagar o arquivo.
+```markdown
+Credenciais: ~/.config/segredos/projetos/ingles-para-ti.env
+```
+
+O que costuma morar ali: host, porta, usuário, senha e a pasta remota. Os
+**nomes** das variáveis ficam documentados, os **valores** nunca.
+
+**Por que não deixar junto do projeto, já que é dele:** porque a pasta do
+projeto é publicada. Se o arquivo estiver lá e a lista de exclusão falhar, a
+senha do servidor vai pra internet num endereço que qualquer um abre. O nome do
+arquivo e a linha no `PROJETO.md` resolvem a associação sem correr esse risco.
+
+No projeto, `.gitignore` com `.env` e `.env.*` antes do primeiro commit, como
+rede de segurança. Uma credencial que entra no histórico continua lá depois de
+você apagar o arquivo.
 
 ---
 
@@ -177,7 +193,8 @@ Depois da checklist vêm três linhas: **a decisão** que isso trava e o porquê
 ## Checklist
 
 - [ ] Checklist de `references/antes-de-subir.md` cumprido antes do primeiro envio
-- [ ] Segredos no cofre, nunca no projeto, `.gitignore` antes do primeiro commit
+- [ ] Acesso da hospedagem no arquivo do projeto, em `segredos/projetos/`
+- [ ] Nenhuma credencial dentro da pasta que vai ser publicada
 - [ ] Arquivo no ar confirmado por `curl`, não por suposição
 - [ ] Cache purgado, se a hospedagem tem proxy na frente
 - [ ] css e js com carimbo de versão ou hash no nome

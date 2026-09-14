@@ -33,10 +33,10 @@ Subpasta funciona igual à Cloudways: uma pasta dentro do `public_html` vira
 
 ## Credencial de FTP
 
-O painel gera host, usuário, senha e porta. Guarde no cofre, nunca no projeto:
+O painel gera host, usuário, senha e porta. Esse acesso é **daquele projeto**, então vai no arquivo dele:
 
 ```
-${XDG_CONFIG_HOME:-$HOME/.config}/segredos/
+${XDG_CONFIG_HOME:-$HOME/.config}/segredos/projetos/<nome-do-projeto>.env
 ```
 
 Prefira **SFTP** (porta 22) quando o plano oferecer, em vez de FTP puro (porta
@@ -73,7 +73,7 @@ tipo de arquivo, e o `noindex` enquanto a página é protótipo.
 - [ ] Arquivos no `public_html`, com `index.html` na raiz certa
 - [ ] Domínio apontado e propagado
 - [ ] SSL ativo e `https://` forçado
-- [ ] Credencial no cofre, e SFTP em vez de FTP puro quando disponível
+- [ ] Credencial em `segredos/projetos/<nome>.env`, e SFTP em vez de FTP puro quando disponível
 - [ ] Carimbo de versão em css e js
 - [ ] Ao publicar a primeira página por aqui, corrigir este arquivo e remover o
       aviso do topo
