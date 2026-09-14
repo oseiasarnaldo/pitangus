@@ -59,9 +59,9 @@ Windows: o método roda igual lá, o que muda é o nome de alguns comandos
 
 ---
 
-## As chaves de API
+## As chaves e os acessos
 
-Duas regras que valem pra qualquer chave, e que evitam o erro mais caro de
+Três regras que valem pra qualquer credencial, e que evitam o erro mais caro de
 iniciante:
 
 **1 · Chave nunca fica no projeto.** Nem no HTML, nem no código, nem num arquivo
@@ -71,6 +71,11 @@ fechada, e o projeto lê de lá.
 **2 · Chave que vazou está vazada pra sempre.** Se ela entrou num repositório,
 apagar o arquivo não resolve: o histórico guarda. O caminho é revogar a chave e
 gerar outra.
+
+**3 · Nem toda credencial tem a mesma vida.** A chave da API de imagem é sua e
+serve pra todo projeto. O acesso do servidor é **daquele cliente**, e muda a
+cada um. Por isso o cofre tem duas gavetas: uma pro que é seu, outra com um
+arquivo por projeto.
 
 → `references/apis.md`
 
@@ -149,6 +154,7 @@ Depois da checklist vêm três linhas: **a decisão** que isso trava e o porquê
 - [ ] Claude Code instalado e rodando numa pasta de projeto
 - [ ] Uma página de teste criada e aberta no navegador
 - [ ] Chrome Canary com MCP conectado, se for usar verificação automática
-- [ ] Chaves de API no cofre, nunca no projeto
+- [ ] Chave de API na gaveta comum, acesso de servidor na gaveta do projeto
+- [ ] Nenhuma credencial dentro da pasta que vai ser publicada
 - [ ] Testado cada passo antes de avançar pro próximo
 - [ ] Pronto pra ir pra `projetar`
