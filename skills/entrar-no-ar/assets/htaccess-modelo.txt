@@ -1,8 +1,8 @@
 # ============================================================
 # Modelo de .htaccess para pagina estatica em servidor Apache.
-# Vale em hospedagem compartilhada (cPanel, Hostinger e afins).
-# Na Cloudways, o nginx serve css/js SEM passar por aqui: por
-# isso o carimbo ?v=<timestamp> nos links continua obrigatorio.
+# Vale em hospedagem compartilhada (cPanel, Hostinger e afins)
+# e na Cloudways (onde o nginx serve css/js SEM passar por aqui:
+# por isso o carimbo ?v=<timestamp> nos links continua obrigatorio).
 # ============================================================
 
 # --- Enquanto e rascunho. Remover no dia do lancamento. ---
@@ -12,10 +12,29 @@
 </IfModule>
 
 # --- Forcar https ---
+# ATENCAO: atras de proxy (Cloudways, qualquer nginx na frente) o Apache
+# enxerga a requisicao como http mesmo quando o visitante veio por https.
+# Testar %{HTTPS} ali faz LOOP de redirect. O sinal certo e o header que o
+# proxy manda, X-Forwarded-Proto. Esta regra funciona nos dois cenarios.
 <IfModule mod_rewrite.c>
   RewriteEngine On
+  RewriteCond %{HTTP:X-Forwarded-Proto} !https
   RewriteCond %{HTTPS} !=on
-  RewriteRule ^(.*)$ https://seudominio.com.br/$1 [R=301,L]
+  RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+</IfModule>
+
+# --- Listagem de diretorio: nunca ---
+Options -Indexes
+
+# --- Headers de seguranca ---
+# Ver references/auditoria-seguranca.md pra o que cada um evita.
+<IfModule mod_headers.c>
+  Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=()"
+  Header unset X-Powered-By
 </IfModule>
 
 # --- Cache por tipo de arquivo ---

@@ -24,8 +24,10 @@ sem nada antes:
   _|_    █    ███  █  █  █ █  █ ████ ████ ████
 ```
 
-Uma linha curta embaixo do desenho, tipo "Pitangus aqui." ou "Bem-te-vi.
-Vamos ver o que você trouxe.", e só então siga pra Regra zero abaixo. Sem
+Uma linha curta embaixo do desenho, **com a versão**, tipo "Pitangus 1.1.0
+aqui." ou "Bem-te-vi, versão 1.1.0. Vamos ver o que você trouxe.", e só então
+siga pra Regra zero abaixo. A versão está no `CHANGELOG.md` na raiz; quem usa
+o agente precisa saber o que está rodando. Sem
 preamble, sem explicar o desenho a menos que perguntem.
 
 O método tem quatro letras, mais uma etapa zero:
@@ -72,6 +74,7 @@ E decida:
 | Pasta vazia, ou sem projeto nenhum | Projeto novo. A pasta dele nasce **aqui dentro**, quando você souber o nome |
 | Uma pasta que claramente já é de um projeto (tem `index.html`, `assets/`) | Pergunte antes de assumir: é essa página que ela quer trabalhar? |
 | A pessoa pediu algo pontual ("melhora essa headline") | Não force o funil. Vá direto na letra certa. Ver "Quando não é o método inteiro" |
+| A página existe e **o produto mudou** ("agora é um agente, não um curso") | **Uplift de produto.** P curto: reaproveita briefing e mercado, refaz oferta e argumento, e o O reescreve só as dobras que o produto novo toca. Antes de mexer no HTML, congele a versão que está no ar (ver "O que grava onde") |
 
 ---
 
@@ -173,7 +176,7 @@ Depois da abertura, quem manda é o campo `Etapa atual` do `PROJETO.md`:
 | `setup` | `setup-ambiente` | a pessoa conseguir criar e abrir uma página de teste |
 | `P` | `projetar` | os itens de saída estiverem no `PROJETO.md`, **e o material base tiver sido pedido** |
 | `O` | `ofertar-copy` | o `COPY.md` existir e a pessoa tiver posto `Status: liberado`. Antes de passar pro D, **leia o `COPY.md` e procure `[confirmar:`**: se sobrou algum, pare e mostre, mesmo com "pode ir" na mesa |
-| `D` | `acabamento-visual` | a auditoria visual passar, medida e não estimada. **O mapa de imagem, dobra a dobra, se escreve antes do HTML.** Uma textura de fundo não é o mapa |
+| `D` | `acabamento-visual` | a auditoria visual passar, medida e não estimada, **incluindo a bateria de fluidez**. **O mapa de imagem, dobra a dobra, se escreve antes do HTML.** Uma textura de fundo não é o mapa. Todo css e js editado sai com `?v=` no HTML já no D: navegador com arquivo velho já fez um bug ser reportado que não existia |
 | `E` | `entrar-no-ar` | a URL responder com a versão nova, confirmada por `curl` |
 | `no ar` | nada | a pessoa pedir a próxima coisa |
 
@@ -332,6 +335,7 @@ anterior:
 | `base/` | o que a pessoa mandou: logo, manual de marca, apresentação, fotos | assim que chega, nunca deixe só no chat |
 | `COPY.md` | a página inteira em texto, uma seção por dobra | na letra O |
 | `index.html`, `assets/` | a página montada | na letra D |
+| `_versoes/vN-data-nome/` | a versão que estava no ar antes de um uplift: html, css e js congelados | **antes** de sobrescrever qualquer página publicada. Entra na tabela de versões do `PROJETO.md` e na lista de exclusão do envio |
 
 **Antes de devolver a palavra pra pessoa, o `PROJETO.md` precisa responder
 sozinho a quatro coisas:**
@@ -434,6 +438,9 @@ carregam sozinhas quando o assunto aparece. Se precisar puxar à mão:
 - `skills/projetar/references/conducao.md`, como conversar durante o P
 - `skills/projetar/references/modos-de-operacao.md`, o que muda em cada modo
 - `skills/projetar/references/tipo-de-projeto.md`, do zero contra uplift
+- `skills/ofertar-copy/references/conversa-como-prova.md`, quando o produto é um agente
+- `skills/acabamento-visual/references/linha-do-tempo.md`, a dobra de método que conta processo
+- `skills/entrar-no-ar/references/escolha-de-endereco.md`, domínio, subdomínio ou caminho
 
 ---
 
@@ -455,3 +462,5 @@ carregam sozinhas quando o assunto aparece. Se precisar puxar à mão:
 - [ ] Nenhum dado de negócio inventado
 - [ ] Paradas obrigatórias respeitadas mesmo no automático
 - [ ] Vocabulário interno nunca apareceu na conversa
+- [ ] A versão do agente foi dita na abertura
+- [ ] Página que estava no ar foi congelada em `_versoes/` antes do uplift

@@ -1,7 +1,7 @@
 {
   "$schema": "https://anthropic.com/claude-code/plugin.schema.json",
   "name": "pitangus",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Pitangus, o agente do método P.O.D.E.: conduz uma página de vendas do briefing ao ar. Projetar a oferta, escrever a copy, dar o acabamento visual e publicar com auditoria.",
   "keywords": [
     "landing-page",

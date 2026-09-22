@@ -116,3 +116,19 @@ três meses, você ou outra pessoa vai olhar e achar que foi esquecimento, e vai
 - [ ] Pixel disparando, conferido no navegador
 - [ ] Pastas de bruto, ferramenta e QA fora do envio
 - [ ] Checklist de `../../acabamento-visual/references/auditoria-visual.md` fechado antes de subir
+
+---
+
+## O pacote de SEO, mesmo em página de tráfego pago
+
+Cinco coisas, todas baratas, todas esquecidas:
+
+1. `robots` em `index, follow, max-image-preview:large` no dia do lançamento
+   (no HTML **e** no `.htaccess`, os dois lugares).
+2. JSON-LD com `Product` (nome, preço, moeda, garantia como
+   `hasMerchantReturnPolicy`) e `FAQPage` gerada a partir das perguntas da
+   própria FAQ, extraídas do HTML pra não divergir.
+3. `twitter:title`, `twitter:description`, `twitter:image`, e `og:site_name`
+   com o nome do produto, não o da agência.
+4. `robots.txt` e `sitemap.xml` na raiz do host, com o endereço final.
+5. Um `h1` só, nenhuma imagem sem `alt`: conferir por `grep`, não por olho.

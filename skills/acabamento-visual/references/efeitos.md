@@ -490,3 +490,66 @@ escalona em 6, sem escrever regra nova pra cada tamanho de grupo.
   suficiente pra ela aparecer.
 - Hero, marquee, qualquer coisa que já tem animação própria → não marcar.
   `data-reveal` é pro conteúdo que hoje só "aparece", sem entrada nenhuma.
+
+
+---
+
+## 11. Balão que se digita, sem pular o layout
+
+O efeito: a última fala do agente entra com três pontos "pensando", depois se
+digita letra a letra com cadência irregular (34 a 104 ms), uma vez só, e fica
+parada. Pra parecer gente: cadência regular é assinatura de máquina.
+
+A armadilha: o balão nasce vazio e **cresce a cada letra**, empurrando tudo que
+está abaixo. Na sessão do Pitangus a tela "pulava" a cada balão.
+
+O conserto tem duas partes, e as duas são necessárias:
+
+1. **Fantasma.** O `.txt` vira `display: grid`; um `::before` com
+   `content: attr(data-txt) "\00a0\00a0"` e `visibility: hidden` ocupa a
+   célula com o texto final (mais dois espaços pro cursor não quebrar linha);
+   o texto digitado entra num filho `.typed` na mesma célula, por cima.
+   Altura e largura ficam reservadas desde o primeiro frame.
+2. **Nenhum pseudo-elemento extra na grade.** Um `::after` no `.txt` pra
+   desenhar o cursor vira um segundo item da grade e cria uma linha de 14 px
+   só enquanto digita. O cursor e os pontos "pensando" ficam no `::after` do
+   `.typed`, que já está dentro da célula.
+
+Teste que prova: medir `offsetHeight` do balão em espera, pensando, digitando
+e pronto. Os quatro precisam ser iguais.
+
+A fala da pessoa não se digita e não brilha: fundo neutro, sem gradiente.
+Quem brilha é o agente. E quando o balão fica sobre uma imagem (mini página,
+foto), ele precisa ser opaco, senão o que está atrás vaza como marca-texto.
+
+## 12. Diagrama vivo: entrada escalonada e loop de ida e volta
+
+Diagrama estático em dobra de método parece rascunho. O tratamento:
+
+- **Entrada:** cada peça do SVG (`.ig > :not(defs)`) sobe 6 px e acende,
+  escalonada em 80 ms por `nth-child`, quando a dobra ganha `.visivel`.
+- **Loop:** depois da entrada, um movimento lento do que a peça representa,
+  em `ease-in-out` alternado (2,4 a 3,2 s): seções que respiram pro lado,
+  linhas de texto que "escrevem" (`scaleX` pela esquerda), camadas que
+  deslizam em cascata, um selo que pulsa. Sem pulo de layout, porque é tudo
+  `transform` e `opacity` em `transform-box: fill-box`.
+- **Fundo da peça:** as camadas do hero em miniatura (grade mascarada, luz
+  que deriva em 14 s linear, grão a 9%).
+- **Cuidado com regra genérica:** um `circle:last-of-type` pensado pro selo
+  de uma peça vazou pros pontos das outras. Escopo por etapa.
+
+Reduced motion desliga tudo e mostra o estado final.
+
+## 13. Duas armadilhas de camada que parecem "cor errada"
+
+**Grão sobre faixa sem fundo.** O grão por dobra (`.section::after`) aplicado a
+uma faixa transparente que corre sobre a base do hero vira uma **banda cinza**
+com borda dura. Faixa sem fundo próprio não recebe grão: `#faixa::after { display: none }`.
+
+**Derrame do divisor cortado.** O divisor entre dobras tem um derrame de luz de
+190 px pra baixo. Quando a dobra de cima ainda se estende alguns pixels abaixo
+da linha (uma faixa com margem negativa que mede menos que a margem), o
+derrame é cortado exatamente ali e vira uma faixa clara de 25 px. Ou a dobra de
+baixo sobe no empilhamento (`z-index`) e cobre o resto, ou esse divisor fica
+sem derrame. Diagnóstico: `elementsFromPoint` logo abaixo da linha e a leitura
+dos pixels de uma captura, não o olho.

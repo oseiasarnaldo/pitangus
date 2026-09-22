@@ -144,3 +144,37 @@ promovida a cor de marca.
 - [ ] Gradiente com texto por cima testado nas **duas** pontas
 - [ ] Gradiente em texto com fallback sólido antes do `@supports`
 - [ ] Nenhum valor de cor literal fora do `:root`
+
+
+---
+
+## Hierarquia de botões: o que brilha é o que compra
+
+Sete botões iguais é o mesmo que nenhum. Separe em dois níveis:
+
+| Botão | Papel | Tratamento |
+|---|---|---|
+| os que **compram** (torre, fechamento, barra fixa do celular) | levar pro checkout | gradiente da marca + halo permanente + um brilho que varre o botão a cada 7 s (`::after` inclinado, `translateX` de -40% a 460%, 18% do ciclo) + sobe 2 px no hover |
+| os que **rolam** até a oferta (hero, comparativo, garantia) | mover a pessoa | mesmo gradiente, **sem halo em repouso**, halo discreto só no hover |
+
+O olho aprende em uma tela: o que brilha é o que compra.
+
+**Verde no botão de compra: não.** O "botão verde converte mais" é lenda de
+outro contexto. Converte o botão ser a coisa mais visível da dobra. Verde nessa
+página já tem dono, o WhatsApp; se o botão de compra também for verde, "compre"
+e "fale comigo" viram a mesma coisa pro olho, e a pessoa clica no mais barato.
+
+O que não entra em botão nenhum: pulsar, piscar, tremer, seta animada. Avisa
+"estão tentando me empurrar" e derruba a confiança que a garantia construiu.
+
+## A exceção semântica às duas cores
+
+Verde e vermelho **como significado**, não como marca:
+
+- check verde (`#2FD27A`) e X magenta numa tabela comparativa, com a coluna
+  vencedora mais escura que a tabela (quase preta, `#0E1116`), não rosada;
+- verde do WhatsApp no botão de conversa;
+- "aprovado" e "travado" num painel de status.
+
+São cores de leitura universal, e brigar com elas custa clareza. Fora desses
+três casos, vale a regra: duas cores de marca, e só.

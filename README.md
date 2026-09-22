@@ -10,7 +10,12 @@ duas coisas acontecem na mesma tela.
 
 ## Instalação
 
-Uma linha, e o agente passa a existir em qualquer pasta do seu computador:
+**Quem comprou** recebe um arquivo pra baixar e instalar localmente, com o
+passo a passo na área de membros. O agente funciona no Claude Cowork e no
+ChatGPT; o terminal é opcional.
+
+**Pra quem desenvolve o método**, uma linha e o agente passa a existir em
+qualquer pasta do seu computador:
 
 ```bash
 git clone https://github.com/oseiasarnaldo/pitangus.git ~/.claude/skills/pitangus

@@ -70,10 +70,19 @@ da pessoa ler a headline.
 
 ## O caminho, em ordem
 
+**0 · Onde a página mora.** Domínio próprio, subdomínio ou caminho: a tabela
+que fecha a decisão em uma rodada, e a regra "apex em WordPress = subdomínio".
+→ `references/escolha-de-endereco.md`
+
 **1 · Antes de subir.** As trocas que dependem de decisão sua: link de
-checkout, domínio, indexação, pixel. Nenhuma exige mexer no CSS, e todas
-quebram a página se ficarem pra depois.
+checkout, domínio, indexação, pixel, e o pacote de SEO (JSON-LD de produto e
+FAQ, twitter tags, `robots.txt`, `sitemap.xml`). Nenhuma exige mexer no CSS, e
+todas quebram a página se ficarem pra depois.
 → `references/antes-de-subir.md`
+
+**1b · DNS.** Se o domínio está no Cloudflare, o registro é um comando com o
+token da zona, sem esperar ninguém abrir painel.
+→ `references/cloudflare.md`
 
 **2 · Subir.** O envio em si, com o gotcha de cada hospedagem.
 → `references/cloudways.md`, `references/hostinger.md`, `references/vercel.md`, `references/ftp-generico.md`
@@ -91,6 +100,10 @@ curl -s https://seudominio.com.br/ | grep 'algo-que-so-existe-na-versao-nova'
 **5 · Auditar.** Carregamento, mobile e leitura por agente, agora que a URL
 existe de verdade.
 → `references/auditoria-publicacao.md`
+
+**6 · Auditar segurança.** O que está público no diretório, listagem,
+headers, credencial no publicado. Cinco minutos, antes do tráfego.
+→ `references/auditoria-seguranca.md`
 
 ---
 
@@ -204,3 +217,6 @@ Depois da checklist vêm três linhas: **a decisão** que isso trava e o porquê
 - [ ] Assinatura de autoria aplicada, e conferida com `assets/verificar-assinatura.py`
 - [ ] Nome do projeto e data de publicação anotados no `PROJETO.md` (sem eles o carimbo dos assets não se recalcula)
 - [ ] `references/auditoria-publicacao.md` rodada, com as notas registradas
+- [ ] Endereço decidido com `references/escolha-de-endereco.md` e o motivo no `PROJETO.md`
+- [ ] `references/auditoria-seguranca.md` rodada: listagem fechada, headers, nada de credencial no publicado
+- [ ] Redirect https testado atrás do proxy (um salto, sem loop)

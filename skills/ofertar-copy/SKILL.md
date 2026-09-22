@@ -92,6 +92,13 @@ não pode fazer.
 seção por dobra e cada bloco debaixo de um rótulo.
 → `references/arquivo-de-copy.md`
 
+**6 · Quando o produto é um agente ou um serviço conduzido.** A dobra de método
+vira conversa: três falas por etapa, a pessoa respondendo no meio.
+→ `references/conversa-como-prova.md`
+
+**A conta da torre.** Depois de qualquer troca de preço, `scripts/soma-torre.py index.html`
+confere soma, "de" e economia. Numa tarde o preço mudou três vezes; a soma na mão erra.
+
 ---
 
 ## A entrega é um arquivo, não uma resposta na conversa
@@ -210,3 +217,5 @@ Depois da checklist vêm três linhas: **a decisão** que isso trava e o porquê
 - [ ] Dado que falta marcado como `[confirmar: ...]`, nunca inventado
 - [ ] Pendências e versões descartadas no fim do arquivo
 - [ ] `Status: liberado` pela pessoa antes de chamar `acabamento-visual`
+- [ ] Depois de cada edição da pessoa, o arquivo foi relido inteiro e conferido contra contradição entre dobras
+- [ ] Torre conferida com `scripts/soma-torre.py` depois da última troca de preço

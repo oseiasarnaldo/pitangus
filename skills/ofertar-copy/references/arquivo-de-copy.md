@@ -165,7 +165,11 @@ Ela vai editar, e é pra isso que o arquivo existe. Duas coisas ao voltar:
 1. **Leia o arquivo de novo, inteiro, antes de qualquer coisa.** O que está no
    disco vence o que você lembra da conversa. Ela pode ter mexido ontem, em
    outra sessão, sem você.
-2. **Não "melhore" em silêncio o que ela escreveu.** Se a edição dela quebrou
+2. **Procure contradição.** A edição dela em uma dobra pode desmentir outra.
+   Caso real: "Roda no Claude e no ChatGPT" entrou no hero enquanto a FAQ
+   inteira dizia "a ferramenta é o Claude". Trate como `[confirmar:]`: mostre
+   as duas frases lado a lado e pergunte qual vale, antes de qualquer HTML.
+3. **Não "melhore" em silêncio o que ela escreveu.** Se a edição dela quebrou
    alguma coisa (a promessa ficou maior do que a entrega, o botão perdeu o
    valor, a prova sumiu da dobra onde a dúvida nasce), **diga qual é o risco e
    deixe a decisão com ela**. O texto é dela.

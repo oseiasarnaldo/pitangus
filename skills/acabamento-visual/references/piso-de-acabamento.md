@@ -357,3 +357,14 @@ abaixo por não ter pensado nisso.
 - [ ] `svh` e não `vh` na altura de dobra
 - [ ] `prefers-reduced-motion` em tudo que se move
 - [ ] Medição rodada, e nenhum item `ABAIXO` sem motivo escrito
+
+
+---
+
+## Item 9 (set/2026): fluidez medida
+
+O piso mede o que existe no CSS. A bateria de fluidez mede o que a pessoa
+sente: a página que pula, o frame que trava, a rolagem que engasga no celular.
+`scripts/audita-fluidez.js`, duas vezes (desktop, e celular com CPU 4x mais
+lenta). Aprovado é CLS 0, nenhum frame acima de 100 ms, zero long task, sem
+estouro. Registre os números no `PROJETO.md` como registra o contraste.

@@ -228,6 +228,12 @@ O que elucida, em ordem de força:
 sozinha ainda conta o que está acontecendo? Se não conta, ela é ambiente, e a
 dobra continua sem explicação visual.
 
+**O diagrama é mudo.** Nada de número, rótulo ou palavra dentro da ilustração:
+forma, cor e movimento contam; o que precisa ser lido mora no texto ao lado.
+Diagramas com "1, 2, 3, 4" e "headline / prova / oferta" foram rejeitados duas
+vezes numa mesma sessão. E balão de conversa não vai em cima do diagrama: a
+conversa é texto, mora na coluna de texto.
+
 **Toda peça de elucidação leva legenda.** O `COPY.md` tem o rótulo
 `**Legenda**` justamente pra isso: se a copy escreveu uma, ela é obrigatória.
 Se não escreveu e a peça precisa, peça o texto em vez de inventar.
@@ -316,6 +322,32 @@ no fundo. O auditor lista as imagens sem máscara com nome, então não tem como
 não ver.
 
 → `references/auditoria-visual.md` e os scripts em `scripts/`
+
+### 7b. Uplift: o que é novo ganha arquivo próprio
+
+Quando a página já existe e você está mudando texto, oferta ou uma dobra, **todo
+CSS e JS novo vai num arquivo separado** (`v3.css`, `v3.js`), carregado por
+último, com `?v=` no link. Nada de editar o `lp.css` de dois meses atrás no
+meio. O ganho é duplo: dá pra desligar a rodada inteira com uma linha, e a
+sessão seguinte sabe exatamente o que mudou. E a versão anterior fica
+congelada em `_versoes/` antes do primeiro toque.
+
+### 7c. A bateria de fluidez
+
+Contraste e piso não pegam a página que "pula". `scripts/audita-fluidez.js`
+rola a página inteira, para na dobra mais animada e mede deslocamento de
+layout, tempo de frame, tarefas longas e estouro. Roda no desktop e no celular
+com CPU 4x mais lenta. **CLS 0 e nenhum frame acima de 100 ms** é o mínimo.
+
+### 7d. O card social
+
+O `og:image` é a composição do hero em 1200 por 630, não uma arte nova.
+→ `references/card-social.md`
+
+### 7e. Dobra de método como linha do tempo
+
+Quatro cards iguais não contam processo.
+→ `references/linha-do-tempo.md`
 
 ### 8. Efeitos prontos, com o motivo do conserto junto
 
@@ -569,3 +601,7 @@ Não entregue sem passar por aqui:
 - [ ] Textura de matéria em toda dobra, e um conjunto de ícones só
 - [ ] Máscara em toda imagem grande, conferida pelo auditor e não a olho
 - [ ] Medidor do piso de acabamento rodado, sem item `ABAIXO` por esquecimento
+- [ ] Bateria de fluidez rodada em desktop e celular com CPU 4x: CLS 0, sem frame acima de 100 ms
+- [ ] Nenhuma palavra ou número dentro de diagrama de elucidação
+- [ ] Em uplift: tudo novo em arquivo próprio de css e js, com `?v=`, e a versão anterior em `_versoes/`
+- [ ] Card social capturado em 1200 x 630 a partir da composição do hero

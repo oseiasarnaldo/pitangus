@@ -32,6 +32,24 @@ até o cliente aprovar a troca. Migração sem risco.
 
 ---
 
+## Antes de tudo: qual servidor, e como entrar
+
+A conta do Cloudways tem vários servidores, e o cofre pode guardar o acesso de
+**outro** servidor. Liste pela API (`GET /server`) e ache a app pelo `id`:
+lá estão `sys_user`, `sys_password`, `app_fqdn` e o IP público do servidor.
+A pasta da app é `/home/master/applications/<sys_user>/public_html`.
+
+**Senha pode estar desligada.** Em servidor com "SSH por chave" o master e o
+usuário da app recusam senha (`Bad authentication type`). Não insista: registre
+a sua chave pública pela API (`POST /ssh_key` com `server_id`, `ssh_key_name`,
+`ssh_key`) e entre como master com a chave. Depois disso, `rsync -az --delete
+--exclude-from=.vercelignore --chmod=Du=rwx,Dg=rx,Do=rx,Fu=rw,Fg=r,Fo=r` faz o
+envio inteiro em um comando, com as permissões certas.
+
+**Criar app pela API** (`POST /app` com `server_id`, `application=phpstack`,
+`app_label`) leva um minuto; acompanhe pelo `operation_id`. Pra apontar o
+domínio: `POST /app/manage/cname`. A app nasce com um `index.php`: apague.
+
 ## SFTP é chroot, SSH não. Os paths são diferentes
 
 O gotcha mais caro, e o que mais consome tempo de quem nunca viu:
@@ -144,10 +162,44 @@ dentro do servidor:
 curl -s -o /dev/null -X PURGE -H 'Host: seudominio.com.br' http://127.0.0.1:8080/caminho/
 ```
 
-Purgue os **dois hosts**, com e sem `www`. Eles são entradas separadas no cache,
-e purgar só um deixa metade dos visitantes na versão velha.
+Purgue os **dois hosts**, com e sem `www` (e o `app_fqdn` do Cloudways, se
+alguém testou por ele). Eles são entradas separadas no cache, e purgar só um
+deixa metade dos visitantes na versão velha. E purgue **cada caminho** que
+mudou: `/`, `/pitangus/`, `/pitangus/assets/og.jpg`. O purge é por URL.
 
 ---
+
+## SSL pela API: o endpoint da documentação está errado
+
+`POST /security/lets_encrypt` (o da doc) devolve **405**. O que funciona:
+
+```bash
+curl -X POST https://api.cloudways.com/api/v1/security/lets_encrypt_install \
+  -H "Authorization: Bearer $TOKEN" \
+  -d server_id=... -d app_id=... -d "ssl_email=$EMAIL" -d wild_card=false \
+  -d 'ssl_domains[]=lp.dominio.com.br'
+```
+
+Acompanhe o `operation_id` (uns 70 s) e ligue a renovação com
+`POST /security/lets_encrypt_auto` (`auto=true`). Pré-requisito: o DNS já
+apontando pro IP do servidor, sem proxy do Cloudflare (ver `cloudflare.md`).
+Depois do SSL, o `app_fqdn` (`*.cloudwaysapps.com`) passa a servir o certificado
+do domínio e dá erro de nome no navegador: é esperado, use o domínio.
+
+## Redirect https: atrás do nginx, `%{HTTPS}` faz loop
+
+O Apache está atrás do nginx e enxerga toda requisição como http. A regra
+clássica `RewriteCond %{HTTPS} off` redireciona pra https, o nginx entrega
+de novo como http, e assim por diante: **loop infinito**, e o `curl -L` da
+página volta vazio. O sinal certo é o header do proxy:
+
+```apache
+RewriteCond %{HTTP:X-Forwarded-Proto} !https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+```
+
+O `htaccess-modelo.txt` já vem assim. Teste com `curl -sIL http://...` e conte
+os saltos: tem que ser um.
 
 ## Redirect duplo quando tem CDN na frente
 
@@ -191,3 +243,7 @@ tira o esquecimento da equação, e o passo 5 é o que todo mundo esquece.
 - [ ] Cache purgado nos dois hosts depois do envio
 - [ ] Versão no ar confirmada por `curl`, não por suposição
 - [ ] Credencial lida de `segredos/projetos/<nome>.env`, fora da pasta publicada
+- [ ] Servidor conferido pela API antes de conectar (o do cofre pode ser outro)
+- [ ] Chave SSH registrada pela API quando senha está desligada
+- [ ] SSL por `lets_encrypt_install`, renovação automática ligada
+- [ ] Redirect https com `X-Forwarded-Proto`, um salto só
