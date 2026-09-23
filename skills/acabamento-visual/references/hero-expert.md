@@ -37,13 +37,19 @@ Composição que funcionou (1440 px):
 - `.hero-palco { position: relative }` é o container das duas camadas.
 - **Foto em primeiro plano**: `width: 54%; margin-left: auto; z-index: 2;
   pointer-events: none`. Recorte com alfa (mesmo arquivo da raiz, sem gerar nada
-  novo), máscara vertical desvanecendo a base (`#000 58%, transparent 93%`) e
+  novo, com pelo menos 2x a largura exibida), máscara vertical desvanecendo a
+  base (`#000 58%, transparent 93%`) e
   `drop-shadow(-18px 24px 40px rgba(8,10,14,.6))` puxada para o lado da janela,
   que é onde a sombra faz a foto "sentar" na cena.
 - **Janela atrás do ombro**: `position: absolute; left: 0; top: 9%; width: 68%;
   z-index: 1`, com `perspective(1400px) rotateY(7deg) rotateX(2deg)` e
   `transform-origin: right center`. A inclinação leve diz "tela de estúdio";
   mais que 8° vira maquete.
+- **Mais de uma pessoa no palco:** a máscara de base sai de cada foto e vai
+  num wrapper que envolve o grupo, 30% mais largo que o palco (`left: -15%;
+  right: -15%`). Máscara por pessoa deixa um corpo transparecer no outro
+  (fantasma), e wrapper do tamanho do palco corta o braço de quem sai pela
+  lateral.
 - Mantenha a foto no mesmo eixo (lado) das versões anteriores da página. Mudar
   a posição do expert entre versões confunde quem já viu a anterior.
 

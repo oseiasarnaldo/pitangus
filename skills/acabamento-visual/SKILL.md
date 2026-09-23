@@ -96,7 +96,7 @@ Esta skill descreve dezenas de técnicas, e dá pra ler tudo e entregar uma
 página **chapada**: imagem colada em fundo liso, sem entrada, sem máscara, sem
 luz. Catálogo não obriga nada, então existe um piso.
 
-**Oito itens, e nenhuma página é entregue abaixo deles:**
+**Nove itens, e nenhuma página é entregue abaixo deles:**
 
 1. Dobra de abertura com **quatro camadas nomeadas** (textura, grade e scrim,
    luz de marca, grão), cada uma com z-index próprio
@@ -117,6 +117,7 @@ luz. Catálogo não obriga nada, então existe um piso.
    bibliotecas
 7. **Sombra em duas camadas**, e borda de luz no escuro
 8. **`prefers-reduced-motion`** em tudo que se move
+9. **Resolução conferida**: nenhuma imagem exibida maior do que o arquivo aguenta em tela 2x
 
 Tem um medidor no fim do arquivo de referência: ele conta o que existe no CSS
 aplicado e diz o que está abaixo do piso. **Rode antes de entregar**, do mesmo
@@ -306,11 +307,12 @@ legibilidade é alinhamento exato e texto nítido.
 
 Nunca entregue no "acho que está bom". Meça.
 
-**Dois auditores, e os dois são obrigatórios antes de mostrar a página:**
+**Três auditores, e os três são obrigatórios antes de mostrar a página:**
 
 ```
 scripts/audita-contraste.js    reprovação de contraste, lista vazia é aprovado
 scripts/audita-acabamento.js   piso de acabamento, item a item
+scripts/audita-resolucao.js    imagem esticada além do que o arquivo tem
 ```
 
 **`ABAIXO` não é entregável.** Se o medidor acusar, conserte e rode de novo. Se
@@ -322,6 +324,32 @@ no fundo. O auditor lista as imagens sem máscara com nome, então não tem como
 não ver.
 
 → `references/auditoria-visual.md` e os scripts em `scripts/`
+
+### 7a. Resolução: sempre conferida, nunca presumida
+
+**Toda imagem da página tem a resolução conferida antes de ser mostrada à
+pessoa.** Imagem esticada é o defeito que o cliente vê primeiro e o nosso
+revisor não vê nunca: no print reduzido que você lê, tudo parece nítido.
+
+A regra é uma conta: **o arquivo precisa ter a largura exibida vezes 2** (tela
+retina). Abaixo de 1x está esticada, e isso reprova.
+
+- **Rode `scripts/audita-resolucao.js`** com a viewport na maior largura que a
+  página atende (1440 ou 1920) e `deviceScaleFactor` 2. Ele mede `<img>`,
+  fundo CSS e pseudo-elemento, e já considera `object-fit: cover` e
+  `background-size`. `REPROVADO` não é entregável.
+- **Textura de fundo não se estica pra cobrir a dobra.** Gere grande, costure
+  pra repetir sem emenda, e exiba em densidade 2x (`background-size` igual à
+  metade do arquivo). Quadrícula, pauta e grade são CSS, nunca pixel.
+- **Gere já no tamanho de uso.** O Gemini entrega 1K por padrão; peça
+  `imageSize` 2K ou 4K quando a peça ocupa a largura da tela ou vira textura.
+- **Foto de pessoa pequena se reconstrói**, não se amplia: mande a foto pro
+  gerador pedindo a mesma pessoa em 2K, com margem em volta. Confira o rosto
+  a olho antes de usar.
+- **Confira na tela, com zoom**: um print da dobra em 2x, recortado na área da
+  imagem. É lá que o esticamento, o braço cortado e o fantasma aparecem.
+
+→ `references/midia-ia.md`, seções "Resolução" e "Textura de fundo"
 
 ### 7b. Uplift: o que é novo ganha arquivo próprio
 
@@ -600,6 +628,9 @@ Não entregue sem passar por aqui:
 - [ ] Perguntado se pode gerar imagem por IA, e se tem foto própria
 - [ ] Textura de matéria em toda dobra, e um conjunto de ícones só
 - [ ] Máscara em toda imagem grande, conferida pelo auditor e não a olho
+- [ ] Resolução conferida pelo `audita-resolucao.js` em 1440 @2x: nenhuma imagem esticada, avisos explicados no `PROJETO.md`
+- [ ] Textura de fundo gerada grande, repetível sem emenda e exibida em 2x; grade e pauta em CSS
+- [ ] Fade de base aplicado no grupo ou no container, nunca em cada pessoa recortada
 - [ ] Medidor do piso de acabamento rodado, sem item `ABAIXO` por esquecimento
 - [ ] Bateria de fluidez rodada em desktop e celular com CPU 4x: CLS 0, sem frame acima de 100 ms
 - [ ] Nenhuma palavra ou número dentro de diagrama de elucidação

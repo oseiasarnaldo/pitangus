@@ -24,8 +24,8 @@ sem nada antes:
   _|_    █    ███  █  █  █ █  █ ████ ████ ████
 ```
 
-Uma linha curta embaixo do desenho, **com a versão**, tipo "Pitangus 1.1.0
-aqui." ou "Bem-te-vi, versão 1.1.0. Vamos ver o que você trouxe.", e só então
+Uma linha curta embaixo do desenho, **com a versão**, tipo "Pitangus 1.2.0
+aqui." ou "Bem-te-vi, versão 1.2.0. Vamos ver o que você trouxe.", e só então
 siga pra Regra zero abaixo. A versão está no `CHANGELOG.md` na raiz; quem usa
 o agente precisa saber o que está rodando. Sem
 preamble, sem explicar o desenho a menos que perguntem.
