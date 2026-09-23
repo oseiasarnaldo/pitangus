@@ -166,6 +166,69 @@ if (podeVideo) { video.src = video.dataset.src; video.load(); video.play(); }
 
 Sempre com `poster` em WebP, que é o estado final se o vídeo não vier.
 
+## Resolução: gere no tamanho de uso, e confira
+
+O padrão do gerador é 1K. Isso serve pra card e ícone, e estica em qualquer
+peça que ocupa a largura da tela. No Gemini, o tamanho vai no pedido:
+
+```json
+"generationConfig": { "responseModalities": ["IMAGE"],
+  "imageConfig": { "aspectRatio": "16:9", "imageSize": "2K" } }
+```
+
+| Peça | Tamanho | Por quê |
+|---|---|---|
+| card, ícone, passo | 1K | exibida a 400px, 1K dá 2x |
+| hero, mockup largo | 2K | exibida a até 1440px |
+| textura de fundo | 4K, reduzida pra 2048 | vira tile exibido a 1024px, em 2x |
+| pessoa recortada | 2K | recorte sobre fundo liso, com margem |
+
+Depois de montar, **rode `scripts/audita-resolucao.js`**. O print que você lê
+é reduzido e esconde o esticamento; o script não.
+
+## Textura de fundo: grande, costurada, em 2x
+
+Três erros juntos fizeram uma página inteira parecer "esticada além do que
+dava", e o cliente viu no primeiro olhar:
+
+1. **O DNA contaminou a textura.** O parágrafo de marca pede quadrícula e luz
+   neon; aplicado ao prompt da textura, o gerador desenhou grade e borda
+   acesa, e a peça não servia de superfície. **Textura não leva o DNA.** Leva
+   só a matéria, "full-frame, edge to edge, uniform flat lighting, no lines".
+2. **Saiu em 1K e foi esticada** com `cover` pra cobrir seções de 1440px a
+   2000px de altura.
+3. **A quadrícula estava no pixel**, então ampliava junto e borrava.
+
+O conserto, que vira regra:
+
+- gere em 4K, reduza pra 2048 (reduzir afia)
+- achate a luz: subtraia um blur grande e some a média, pra não haver canto
+  mais claro que se repete
+- costure: misture a imagem com ela mesma deslocada meio tile, com peso zero
+  na borda e um no centro, e confira numa prévia 2x2 antes de usar
+- exiba com `background-size: 1024px` e `repeat`: densidade 2x, sem emenda
+- **grade, pauta e quadrícula em CSS** (`linear-gradient` de 1px), nítidas em
+  qualquer largura
+
+## Pessoa recortada: fonte pequena se reconstrói
+
+Foto de expert tirada de site costuma vir pequena (500px) e às vezes com
+braço cortado pela moldura original. Ampliar não resolve. O que resolve:
+
+1. mande a foto pro gerador pedindo **a mesma pessoa, idêntica**, em 2K,
+   "zoom out, 15% de margem vazia dos lados", fundo liso cinza
+2. se ainda encostar na borda, mande **a saída** de volta com o mesmo pedido.
+   Na segunda rodada o enquadramento abre
+3. recorte o fundo (rembg `isnet-general-use`) e **confira sobre magenta**:
+   é onde furo e borda cinza aparecem
+4. confira o rosto a olho contra a foto original, sempre
+
+**Fade de base nunca por pessoa.** Máscara em cada recorte deixa o de trás
+(e o neon, e a textura) aparecer pelo corpo de quem está na frente: vira
+fantasma. A máscara vai no **grupo** ou no **container**, e o grupo é mais
+largo que o palco, porque `mask-image` corta na caixa do elemento e quem sai
+pela lateral fica sem braço.
+
 ## Quando a geração sai ruim
 
 | Problema | Causa | Correção |
@@ -174,6 +237,8 @@ Sempre com `poster` em WebP, que é o estado final se o vídeo não vier.
 | cor puxando para roxo ou violeta | o modelo interpreta "magenta" livremente | proíba explicitamente: "sem roxo, sem violeta, sem lilás" |
 | brilho com borda dura, cara de tinta na água | o gerador entrega bordas definidas demais | `filter: blur(14px)` no CSS transforma em luz volumétrica |
 | logo com fundo branco opaco | o gerador não faz alfa | processe: branco vira transparente, marca vira sólida |
+| textura com grade, borda ou luz neon | o DNA entrou no prompt da textura | textura sem DNA, só matéria e "no lines" |
+| pessoa com braço cortado | enquadramento herdado da foto | peça "zoom out, 15% de margem" e reenvie a saída |
 
 **Regra geral:** quando a geração falha, **entenda a causa antes de tentar de
 novo**. Regerar sem diagnóstico é loteria cara.
@@ -182,7 +247,9 @@ novo**. Regerar sem diagnóstico é loteria cara.
 
 ## Checklist
 
-- [ ] Um DNA escrito, presente em todos os prompts
+- [ ] Um DNA escrito, presente em todos os prompts de peça (textura fica sem)
+- [ ] Cada peça gerada no tamanho de uso: 1K card, 2K hero e pessoa, 4K textura
+- [ ] `audita-resolucao.js` rodado em 1440 @2x, sem REPROVADO
 - [ ] Proibição de texto em todo prompt de imagem
 - [ ] Um objeto por peça, fundo vazio, acento como luz
 - [ ] Vídeo reencodado, sem áudio, com `faststart`

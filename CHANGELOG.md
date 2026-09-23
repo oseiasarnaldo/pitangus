@@ -13,6 +13,29 @@ Formato baseado no Keep a Changelog, versionamento semântico.
 
 ---
 
+## [1.2.0] · 2026-09-23
+
+Resolução de imagem passa a ser conferida sempre, nunca presumida. Veio da LP
+de Simulados do Dominando o ENEM, em que o cliente viu textura esticada e
+professor com braço cortado antes de nós.
+
+### Desenhar
+
+- `scripts/audita-resolucao.js`: compara os pixels do arquivo com os que a
+  tela pede em 2x, para `<img>`, fundo CSS e pseudo-elemento, considerando
+  `object-fit: cover` e `background-size`. Entra como terceiro auditor
+  obrigatório e como item 9 do piso
+- Seção 7a da letra D: a conta do 2x, gerar no tamanho de uso, textura que
+  não se estica, pessoa pequena que se reconstrói, e conferência na tela com
+  zoom
+- `midia-ia.md`: `imageSize` do Gemini (1K, 2K, 4K) por tipo de peça;
+  textura sem o DNA de marca, costurada sem emenda e exibida em 2x, com grade
+  em CSS; reconstrução de foto de pessoa em duas rodadas e conferência sobre
+  magenta
+- Fade de base no grupo ou no container, nunca em cada pessoa recortada (o
+  de trás transparece e vira fantasma), com o wrapper mais largo que o palco
+  pra máscara não cortar braço
+
 ## [1.1.0] · 2026-09-22
 
 O que a LP do próprio Pitangus ensinou (uplift de "curso" para "agente + curso",

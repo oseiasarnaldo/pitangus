@@ -6,13 +6,13 @@
   },
   "metadata": {
     "description": "Pitangus, o método P.O.D.E. empacotado como agente",
-    "version": "1.1.0"
+    "version": "1.2.0"
   },
   "plugins": [
     {
       "name": "pitangus",
       "description": "Conduz uma página de vendas do briefing ao ar: oferta, copy, acabamento visual e publicação com auditoria.",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "source": "./",
       "category": "productivity"
     }
