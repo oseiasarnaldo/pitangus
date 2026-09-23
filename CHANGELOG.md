@@ -35,6 +35,17 @@ professor com braço cortado antes de nós.
 - Fade de base no grupo ou no container, nunca em cada pessoa recortada (o
   de trás transparece e vira fantasma), com o wrapper mais largo que o palco
   pra máscara não cortar braço
+- `references/pessoas-na-pagina.md`: os três defeitos de gente na página
+  (corte, fantasma, borrão), as quatro perguntas antes de usar uma foto, o
+  prompt de reconstrução em duas rodadas, e as regras de composição (fade no
+  grupo, wrapper mais largo, nada sobre rosto nem sobre a mão do gesto)
+- `scripts/confere-recorte.py`: no arquivo, antes da página. Acusa membro
+  encostando na borda (corte herdado da foto) e miolo semitransparente, e
+  salva a prévia sobre magenta
+- `scripts/audita-pessoas.js`: na página montada. Acusa fantasma (máscara
+  na pessoa com imagem atrás), corte (ancestral que recorta e a pessoa passa
+  da caixa) e lista o que está sobre o rosto pra conferir a olho. Entra como
+  quarto auditor obrigatório
 
 ## [1.1.0] · 2026-09-22
 

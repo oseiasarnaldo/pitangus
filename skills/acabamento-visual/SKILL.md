@@ -307,12 +307,19 @@ legibilidade é alinhamento exato e texto nítido.
 
 Nunca entregue no "acho que está bom". Meça.
 
-**Três auditores, e os três são obrigatórios antes de mostrar a página:**
+**Quatro auditores, e os quatro são obrigatórios antes de mostrar a página:**
 
 ```
 scripts/audita-contraste.js    reprovação de contraste, lista vazia é aprovado
 scripts/audita-acabamento.js   piso de acabamento, item a item
 scripts/audita-resolucao.js    imagem esticada além do que o arquivo tem
+scripts/audita-pessoas.js      pessoa com fantasma, cortada pela caixa, ou com algo sobre o rosto
+```
+
+E um conferidor que roda **antes**, no arquivo, quando a página tem gente:
+
+```
+scripts/confere-recorte.py     membro encostando na borda, miolo semitransparente, prévia sobre magenta
 ```
 
 **`ABAIXO` não é entregável.** Se o medidor acusar, conserte e rode de novo. Se
@@ -394,6 +401,23 @@ na primeira tela. Elementos apoiados na foto (mascote, selo) herdam o parallax
 dela.
 
 → `references/hero-expert.md`
+
+### 9b. Pessoas na página: sem corte, sem fantasma, sem borrão
+
+Foto de gente é a peça mais olhada, e os três defeitos que o cliente aponta
+primeiro são sempre os mesmos: **braço cortado**, **um corpo transparecendo
+no outro** e **rosto mole**. Quatro regras que não se quebram:
+
+1. **Foto pequena, com gráfico gravado ou membro cortado se reconstrói** no
+   gerador (mesma pessoa, 2K, "zoom out, 15% de margem"), nunca se amplia nem
+   se remenda. Identidade conferida a olho contra a original.
+2. **Recorte conferido antes de usar**: `confere-recorte.py` sem membro na
+   borda, prévia sobre magenta olhada.
+3. **Fade de base no grupo ou no container, nunca em cada pessoa**, e o
+   wrapper que mascara é mais largo que quem sai pela lateral.
+4. **Nada sobre rosto nem sobre a mão do gesto**, em 390, 768 e 1440.
+
+→ `references/pessoas-na-pagina.md`
 
 ### 10. Ícones: um conjunto, um peso, duas camadas
 
@@ -631,6 +655,7 @@ Não entregue sem passar por aqui:
 - [ ] Resolução conferida pelo `audita-resolucao.js` em 1440 @2x: nenhuma imagem esticada, avisos explicados no `PROJETO.md`
 - [ ] Textura de fundo gerada grande, repetível sem emenda e exibida em 2x; grade e pauta em CSS
 - [ ] Fade de base aplicado no grupo ou no container, nunca em cada pessoa recortada
+- [ ] Pessoa na página: recorte aprovado no `confere-recorte.py`, `audita-pessoas.js` sem fantasma nem corte, nada sobre rosto em 390 e 1440
 - [ ] Medidor do piso de acabamento rodado, sem item `ABAIXO` por esquecimento
 - [ ] Bateria de fluidez rodada em desktop e celular com CPU 4x: CLS 0, sem frame acima de 100 ms
 - [ ] Nenhuma palavra ou número dentro de diagrama de elucidação

@@ -49,7 +49,8 @@ Composição que funcionou (1440 px):
   num wrapper que envolve o grupo, 30% mais largo que o palco (`left: -15%;
   right: -15%`). Máscara por pessoa deixa um corpo transparecer no outro
   (fantasma), e wrapper do tamanho do palco corta o braço de quem sai pela
-  lateral.
+  lateral. Regras completas, com reconstrução de foto e as ferramentas de
+  conferência, em `pessoas-na-pagina.md`.
 - Mantenha a foto no mesmo eixo (lado) das versões anteriores da página. Mudar
   a posição do expert entre versões confunde quem já viu a anterior.
 
